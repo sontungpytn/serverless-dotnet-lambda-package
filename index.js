@@ -15,8 +15,13 @@ class ServerlessPlugin {
   async packageDotNetLambda () {
     const cli = this.serverless.cli;
     cli.log('Package lambda functions!');
-    let service = this.serverless.service;
-
+    const service = this.serverless.service;
+    const buildConfiguration = service.provider.buildConfiguration;
+    const framework = service.provider.framework;
+    if (!buildConfiguration || !framework) {
+      console.error('You need to provide "buildConfiguration" and "framework"');
+      process.exit();
+    }
     const packages = service.getAllFunctions().reduce((dotnetPackages, funcName) => {
       let func = service.getFunction(funcName);
 
@@ -34,7 +39,6 @@ class ServerlessPlugin {
       cli.log(`Start to pack function ${p.projectFolder}`)
       await this.pack(p);
     }
-    process.exit();
   }
 
   async pack (functionPackage) {
@@ -43,9 +47,8 @@ class ServerlessPlugin {
       const service = this.serverless.service;
       const buildConfiguration = service.provider.buildConfiguration;
       const framework = service.provider.framework;
-      const {stdout, stderr } = await exec(`dotnet lambda package --configuration ${buildConfiguration} --framework ${framework} --project-location ${functionPackage.projectFolder} --output-package ${functionPackage.artifact}`);
+      const {stdout } = await exec(`dotnet lambda package --configuration ${buildConfiguration} --framework ${framework} --project-location ${functionPackage.projectFolder} --output-package ${functionPackage.artifact}`);
       cli.log(stdout)
-      cli.log(stderr)
     } catch (error) {
       console.error('An error occured while restoring packages');
       console.error(error);

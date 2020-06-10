@@ -12,6 +12,10 @@
     "lambda",
     "aws"
   ],
-  "author": "sontungpytn",
-  "license": "ISC"
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sontungpytn/serverless-dotnet-lambda-package.git"
+  },
+  "author": "sontungpytn"
 }
