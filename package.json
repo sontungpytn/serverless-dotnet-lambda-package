@@ -1,0 +1,17 @@
+{
+  "name": "serverless-dotnet-lambda-package",
+  "version": "1.0.0",
+  "description": "Serverless plugin for package DotNet lambda function before deploy in to AWS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "serverless",
+    "dotnet",
+    "lambda",
+    "aws"
+  ],
+  "author": "sontungpytn",
+  "license": "ISC"
+}
